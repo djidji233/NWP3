@@ -1,4 +1,38 @@
 package rs.edu.raf.nwp.services;
 
-public class UserService {
+import org.springframework.stereotype.Service;
+import rs.edu.raf.nwp.model.User;
+import rs.edu.raf.nwp.repositories.UserRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserService implements IService<User, Long>{
+
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public User save(User group) {
+        return userRepository.save(group);
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return (List<User>) userRepository.findAll();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
 }

@@ -46,6 +46,7 @@ public class BootstrapData implements CommandLineRunner {
             userTypes.add(userType);
         }
         System.out.println(userTypeRepository.saveAll(userTypes));
+        //System.out.println(userTypeRepository.findAll());
 
         List<User> users = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -53,9 +54,11 @@ public class BootstrapData implements CommandLineRunner {
             user.setIme(FIRST_NAME_LIST[random.nextInt(FIRST_NAME_LIST.length)]);
             user.setPrezime(LAST_NAME_LIST[random.nextInt(LAST_NAME_LIST.length)]);
             user.setTip(userTypes.get(random.nextInt(USER_TYPE_LIST.length)));
+            //user.setTip(userTypeRepository.findById(1l).get());
             users.add(user);
+            System.out.println(userRepository.save(user));
         }
-        System.out.println(userRepository.saveAll(users));
+        //System.out.println(userRepository.saveAll(users));
 
         List<Group> groups = new ArrayList<>();
         for(int i=0; i<GROUP_LIST.length; i++){

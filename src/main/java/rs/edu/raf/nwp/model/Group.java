@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "GROUP")
+@Table(name = "GROUPS")
 public class Group {
 
     @Id
@@ -20,8 +20,9 @@ public class Group {
     @Column(unique = true, nullable = false)
     private String ime;
 
-    @OneToMany(mappedBy = "group", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-    @JsonIgnore
-    @ToString.Exclude
+    @OneToMany(mappedBy = "grupa",
+            cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+//    @JsonIgnore
+//    @ToString.Exclude
     private List<User> korisnici;
 }

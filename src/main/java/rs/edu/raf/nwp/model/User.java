@@ -25,7 +25,7 @@ public class User {
     //@Column(nullable = false)
     private UserType tip;
 
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "GROUP_ID", referencedColumnName = "ID")
     private Group grupa;
 

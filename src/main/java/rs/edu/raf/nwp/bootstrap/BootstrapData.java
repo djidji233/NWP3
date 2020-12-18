@@ -28,7 +28,7 @@ public class BootstrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.printf("Loading data...");
+        System.out.printf("Loading data...\n");
 
         String[] GROUP_LIST = {"Prva","Druga","Treca"};
         String[] USER_TYPE_LIST = {"Smrtnik","Povlascen","Admin"};
@@ -44,8 +44,9 @@ public class BootstrapData implements CommandLineRunner {
             UserType userType = new UserType();
             userType.setIme(USER_TYPE_LIST[i]);
             userTypes.add(userType);
+            System.out.println(userTypeRepository.save(userType));
         }
-        System.out.println(userTypeRepository.saveAll(userTypes));
+        //System.out.println(userTypeRepository.saveAll(userTypes));
         //System.out.println(userTypeRepository.findAll());
 
         List<User> users = new ArrayList<>();
@@ -64,9 +65,13 @@ public class BootstrapData implements CommandLineRunner {
         for(int i=0; i<GROUP_LIST.length; i++){
             Group group = new Group();
             group.setIme(GROUP_LIST[i]);
+//            if(i==0){
+//                group.setKorisnici(users);
+//            }
             groups.add(group);
+            System.out.println(groupRepository.save(group));
         }
-        System.out.println(groupRepository.saveAll(groups));
+        //System.out.println(groupRepository.saveAll(groups));
 
         System.out.println("DATA LOADED!");
 

@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.edu.raf.nwp.model.Group;
 import rs.edu.raf.nwp.services.GroupService;
+import rs.edu.raf.nwp.services.UserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +16,11 @@ import java.util.Optional;
 public class GroupRestController {
 
     private final GroupService groupService;
+    private final UserService userService;
 
-    public GroupRestController(GroupService groupService) {
+    public GroupRestController(GroupService groupService, UserService userService) {
         this.groupService = groupService;
+        this.userService = userService;
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,6 +49,17 @@ public class GroupRestController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteGroup(@PathVariable("id") Long id){
         groupService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/{groupId}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addUserToGroup(@PathVariable Long groupId,
+                                                @RequestParam("userId") Long userId){
+
+        Group group = groupService.findById(groupId).get();
+        group.addUser(userService.findById(userId).get());
+        groupService.save(group);
         return ResponseEntity.ok().build();
     }
 

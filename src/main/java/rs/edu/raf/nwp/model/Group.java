@@ -21,8 +21,15 @@ public class Group {
     private String ime;
 
     @OneToMany(mappedBy = "grupa",
-            cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH},
+            fetch = FetchType.EAGER)
 //    @JsonIgnore
 //    @ToString.Exclude
     private List<User> korisnici;
+
+    public void addUser(User user){
+        korisnici.add(user);
+        user.setGrupa(this);
+    }
+
 }

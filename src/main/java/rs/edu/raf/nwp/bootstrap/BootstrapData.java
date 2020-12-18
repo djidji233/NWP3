@@ -38,7 +38,7 @@ public class BootstrapData implements CommandLineRunner {
         Random random = new Random();
 
 
-
+        // CREATING USER TYPES
         List<UserType> userTypes = new ArrayList<>();
         for(int i=0; i<USER_TYPE_LIST.length; i++){
             UserType userType = new UserType();
@@ -46,32 +46,35 @@ public class BootstrapData implements CommandLineRunner {
             userTypes.add(userType);
             System.out.println(userTypeRepository.save(userType));
         }
-        //System.out.println(userTypeRepository.saveAll(userTypes));
-        //System.out.println(userTypeRepository.findAll());
 
+        // CREATING USERS
         List<User> users = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             User user = new User();
             user.setIme(FIRST_NAME_LIST[random.nextInt(FIRST_NAME_LIST.length)]);
             user.setPrezime(LAST_NAME_LIST[random.nextInt(LAST_NAME_LIST.length)]);
             user.setTip(userTypes.get(random.nextInt(USER_TYPE_LIST.length)));
-            //user.setTip(userTypeRepository.findById(1l).get());
             users.add(user);
             System.out.println(userRepository.save(user));
         }
-        //System.out.println(userRepository.saveAll(users));
 
+        // CREATING GROUPS
         List<Group> groups = new ArrayList<>();
         for(int i=0; i<GROUP_LIST.length; i++){
             Group group = new Group();
             group.setIme(GROUP_LIST[i]);
-//            if(i==0){
-//                group.setKorisnici(users);
-//            }
             groups.add(group);
             System.out.println(groupRepository.save(group));
         }
-        //System.out.println(groupRepository.saveAll(groups));
+
+
+        // ADDING USERS TO GROUPS
+        for(int i=0; i<users.size(); i++){
+            Group g = groups.get(i%3);
+            users.get(i).setGrupa(g);
+        }
+        System.out.println(userRepository.saveAll(users));
+
 
         System.out.println("DATA LOADED!");
 

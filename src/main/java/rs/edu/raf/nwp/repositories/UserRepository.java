@@ -7,10 +7,6 @@ import rs.edu.raf.nwp.model.UserType;
 
 import java.util.List;
 
-public interface UserRepository extends CrudRepository<User, Long> {
-
-    List<User> findAllByImeContainsAndPrezimeContainsAndTipContainsAndGrupaContains (
-            String ime, String prezime, UserType tip, Group grupa
-    );
+public interface UserRepository extends CrudRepository<User, Long>, CustomUserRepository {
 
 }

@@ -4,6 +4,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.edu.raf.nwp.model.Group;
+import rs.edu.raf.nwp.model.User;
+import rs.edu.raf.nwp.model.UserType;
 import rs.edu.raf.nwp.services.GroupService;
 import rs.edu.raf.nwp.services.UserService;
 
@@ -48,6 +50,23 @@ public class GroupRestController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteGroup(@PathVariable("id") Long id){
+        Optional<Group> optionalGroup = groupService.findById(id);
+
+        if(optionalGroup.isPresent()){
+
+            Group gr = optionalGroup.get();
+
+            List<User> users = userService.findAll();
+
+            for(int i=0; i<users.size(); i++){
+                User u = users.get(i);
+                if(u.getGrupa().equals(gr)){
+                    u.setGrupa(null);
+                }
+            }
+
+        }
+
         groupService.deleteById(id);
         return ResponseEntity.ok().build();
     }

@@ -3,7 +3,9 @@ package rs.edu.raf.nwp.controllers;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.edu.raf.nwp.model.User;
 import rs.edu.raf.nwp.model.UserType;
+import rs.edu.raf.nwp.services.UserService;
 import rs.edu.raf.nwp.services.UserTypeService;
 
 import java.util.List;
@@ -15,9 +17,11 @@ import java.util.Optional;
 public class UserTypeRestController {
 
     private final UserTypeService userTypeService;
+    private final UserService userService;
 
-    public UserTypeRestController(UserTypeService userTypeService) {
+    public UserTypeRestController(UserTypeService userTypeService, UserService userService) {
         this.userTypeService = userTypeService;
+        this.userService = userService;
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,6 +49,24 @@ public class UserTypeRestController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteUserType(@PathVariable("id") Long id){
+        Optional<UserType> optionalTip = userTypeService.findById(id);
+
+        if(optionalTip.isPresent()){
+
+            UserType tip = optionalTip.get();
+
+            List<User> users = userService.findAll();
+
+            for(int i=0; i<users.size(); i++){
+                User u = users.get(i);
+                if(u.getTip().equals(tip)){
+                    userService.deleteById(u.getId());
+                }
+            }
+
+        }
+
+
         userTypeService.deleteById(id);
         return ResponseEntity.ok().build();
     }

@@ -4,7 +4,9 @@ package rs.edu.raf.nwp.controllers;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.edu.raf.nwp.model.Group;
 import rs.edu.raf.nwp.model.User;
+import rs.edu.raf.nwp.model.UserType;
 import rs.edu.raf.nwp.services.UserService;
 
 import java.util.List;
@@ -48,6 +50,16 @@ public class UserRestController {
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id){
         userService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/search",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<User> searchUser(@RequestParam(required = false) String ime,
+                                 @RequestParam(required = false) String prezime,
+                                 @RequestParam(required = false) String tip,
+                                 @RequestParam(required = false) String grupa){
+
+        return userService.searchUsers(ime, prezime, tip, grupa);
     }
 
 }

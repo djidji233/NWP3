@@ -1,7 +1,9 @@
 package rs.edu.raf.nwp.services;
 
 import org.springframework.stereotype.Service;
+import rs.edu.raf.nwp.model.Group;
 import rs.edu.raf.nwp.model.User;
+import rs.edu.raf.nwp.model.UserType;
 import rs.edu.raf.nwp.repositories.UserRepository;
 
 import java.util.List;
@@ -35,4 +37,9 @@ public class UserService implements IService<User, Long>{
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
+
+    public List<User> searchUsers(String ime, String prezime, String tip, String grupa){
+        return userRepository.searchUsers(ime,prezime,tip,grupa);
+    }
+
 }

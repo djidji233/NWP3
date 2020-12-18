@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "USER_TYPE")
 public class UserType {
 
     @Id

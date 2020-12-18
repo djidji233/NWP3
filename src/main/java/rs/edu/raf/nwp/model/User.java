@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "USER")
 public class User {
 
     @Id
@@ -21,10 +22,10 @@ public class User {
     private String prezime;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private UserType tip;
 
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne //(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "GROUP_ID", referencedColumnName = "ID")
     private Group grupa;
 

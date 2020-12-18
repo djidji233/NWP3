@@ -1,12 +1,15 @@
 package rs.edu.raf.nwp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
+@Table(name = "GROUP")
 public class Group {
 
     @Id
@@ -18,5 +21,7 @@ public class Group {
     private String ime;
 
     @OneToMany(mappedBy = "group", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-    private Collection<User> korisnici;
+    @JsonIgnore
+    @ToString.Exclude
+    private List<User> korisnici;
 }
